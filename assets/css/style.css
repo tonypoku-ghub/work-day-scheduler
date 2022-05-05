@@ -69,3 +69,10 @@ textarea {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
 }
+
+textarea::placeholder {
+  color: rgb(173, 164, 164);
+  font-size: 1em;
+  font-style: italic;
+  opacity: 0.3;
+}

@@ -1,12 +1,12 @@
 var currentDayEl = $("#currentDay");
-var calendarEl = $("#calendar");
+var calendarEl = $(".container");
 
 // Define styling classes
 var timeBlockClass = "";
 var calRowClass = "row time-block";
-var calBlockTimeClass = "col-1 pt-3 hour";
+var calBlockTimeClass = "col-1 hour";
 var calInputClass = "col-10 description textarea";
-var calBlockSaveClass = "col-1 saveBtn pt-3";
+var calBlockSaveClass = "col-1 saveBtn";
 
 // Global variables
 var storedRecords;
@@ -15,6 +15,9 @@ function doInit() {
   setHeaderDate();
 
   createCalendarGrid();
+
+  // Define listeners
+  $("button").on("click", saveCalendar);
 }
 
 function createCalendarGrid() {
@@ -35,8 +38,6 @@ function createCalendarGrid() {
 
     var calRowEl = $("<div>").addClass(calRowClass).addClass(color_code_class);
 
-    var inputGroupEl = $("<div>").addClass("input-group");
-
     var calBlockTimeEl = $("<span>")
       .addClass(calBlockTimeClass)
       .text(hour.format("h a"));
@@ -46,16 +47,20 @@ function createCalendarGrid() {
       .attr("type", "textarea")
       //.attr("row", "2")
       .attr("id", hour.format("input-h-a"))
-      .attr("placeholder", "Enter Event");
+      .attr("placeholder", "Enter Text here...")
+      .text(localStorage.getItem(hour.format("input-h-a")));
+
+    var saveIconEl = $("<i>").addClass("fa-solid fa-save");
 
     var calBlockSaveEl = $("<button>")
       .addClass(calBlockSaveClass)
-      .attr("id", hour.format("btn-h-a"))
-      .text("Save");
+      .attr("id", hour.format("btn-h-a"));
 
-    inputGroupEl.append(calBlockTimeEl, calInputEl, calBlockSaveEl);
+    calBlockSaveEl.append(saveIconEl);
+    // .text("Save");
 
-    calRowEl.append(inputGroupEl);
+    calRowEl.append(calBlockTimeEl, calInputEl, calBlockSaveEl);
+
     calendarEl.append(calRowEl);
   }
 }
@@ -66,25 +71,16 @@ function setHeaderDate() {
   currentDayEl.text($today);
 }
 
-// Define listeners
-$(".saveBtn").on("click", doSave());
+function saveCalendar(event) {
+  event.stopPropagation();
 
-function doSave() {
-  console.log("doSave called");
-  // get current globally stored var
-  var updatedRecords = storedRecords;
-  // get initials from input box
-  var saveBtnEl = $(this);
+  var clickedBtn = $(this);
 
-  console.log(saveBtnEl.attr("id"));
+  // Fetch textarea data
+  var $textarea = $(clickedBtn.siblings("textarea")[0]);
 
-  // // add new score
-  // updatedRecords.push({ user_initial: initials.value, user_score: score });
-
-  // // Save to local storage
-  // localStorage.setItem("quiz-challenge-scores", JSON.stringify(updatedScores));
-  // //update global var
-  // storedScores = updatedScores;
+  // Save to local storage
+  localStorage.setItem($textarea.attr("id"), $textarea.val());
 }
 
 $.ready(doInit());
