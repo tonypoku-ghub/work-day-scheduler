@@ -4,15 +4,12 @@ In this exercise, I created a simple calander application that allows a user to 
 
 ## User Story
 
-```md
 AS AN employee with a busy schedule
 I WANT to add important events to a daily planner
 SO THAT I can manage my time effectively
-```
 
 ## Acceptance Criteria
 
-```md
 GIVEN I am using a daily planner to create a schedule
 WHEN I open the planner
 THEN the current day is displayed at the top of the calendar
@@ -27,9 +24,9 @@ THEN the text for that event is saved in local storage
 WHEN I refresh the page
 THEN the saved events persist
 
-## To view the page
+# To view the page
+
 https://tonypoku-ghub.github.io/work-day-scheduler/
 
-## Screenshot
-
+# Screenshot
 ![image](https://user-images.githubusercontent.com/60792525/167018188-4142313b-879d-4e9a-a0e2-5fa0666a321d.png)
